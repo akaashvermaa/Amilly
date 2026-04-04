@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+:root {
+  --background: #e2dfda; /* warm off-white/beige based on reference images */
+  --foreground: #171717; /* dark contrast text */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-jura: var(--font-jura);
+  --font-poppins: var(--font-poppins);
+  --font-imprima: var(--font-imprima);
+  --font-junge: var(--font-junge);
+  --font-aboreto: var(--font-aboreto);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+}
+
+@layer utilities {
+  .img-low-sat {
+    /* Very subtle yellowish / warm tone, not overly black or crushed */
+    filter: sepia(15%) saturate(85%) contrast(100%) brightness(100%);
+    transition: filter 0.5s ease;
+  }
+  
+  .img-low-sat:hover {
+    filter: sepia(0%) saturate(100%) contrast(100%);
+  }
+}
