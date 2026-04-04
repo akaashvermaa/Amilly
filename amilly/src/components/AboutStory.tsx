@@ -58,7 +58,7 @@ export default function AboutStory() {
           {/* Big Card - Moving slightly down on scroll */}
           <motion.div 
             style={{ y: y1 }}
-            className="w-full md:w-2/3 h-1/2 md:h-full relative overflow-hidden group bg-[#E5E2DC]/50 rounded-sm"
+            className="w-full md:w-2/3 h-1/2 md:h-full relative overflow-hidden group bg-[#E5E2DC]/50 rounded-sm transform-gpu will-change-transform"
           >
             <Image
               src="/images/Why Amilly - Image big Card.jpg"
@@ -72,7 +72,7 @@ export default function AboutStory() {
           {/* Right column small cards - Moving slightly up on scroll */}
           <motion.div 
             style={{ y: y2 }}
-            className="w-full md:w-1/3 flex flex-row md:flex-col gap-4 h-1/2 md:h-full"
+            className="w-full md:w-1/3 flex flex-row md:flex-col gap-4 h-1/2 md:h-full transform-gpu will-change-transform"
           >
             <div className="w-1/2 md:w-full h-full md:h-1/2 relative overflow-hidden group bg-[#E5E2DC]/50 rounded-sm">
               <Image

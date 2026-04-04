@@ -25,7 +25,7 @@ export default function HeroSection() {
       {/* Background Image Container with Parallax */}
       <motion.div 
         style={{ y: imageY }}
-        className="absolute inset-0 z-0 h-[120%]"
+        className="absolute inset-0 z-0 h-[120%] transform-gpu will-change-transform"
       >
         <Image
           src="/images/PAGE 1 BACKGORUND.png"
