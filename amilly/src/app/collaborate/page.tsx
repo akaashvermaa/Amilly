@@ -10,6 +10,13 @@ import { siteData } from "@/config/siteData";
 
 const collaborationTypes = siteData.collaborate.types;
 
+// Maps each card id → the <select> option value in the form
+const roleMap: Record<number, string> = {
+  1: "ambassador",
+  2: "stylist",
+  3: "photographer",
+};
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function CollaboratePage() {
@@ -83,9 +90,16 @@ export default function CollaboratePage() {
                   {item.desc}
                 </p>
                 <div className="mt-10">
-                  <span className="inline-block border-b border-[#1F1F1F] pb-1 text-xs uppercase tracking-[3px] font-medium cursor-pointer hover:opacity-50 transition-opacity">
-                    Apply Below
-                  </span>
+                  <button
+                    onClick={() => {
+                      setFormData(prev => ({ ...prev, role: roleMap[item.id] ?? "ambassador" }));
+                      const el = document.getElementById("apply-form");
+                      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }}
+                    className="inline-block border-b border-[#1F1F1F] pb-1 text-xs uppercase tracking-[3px] font-medium cursor-pointer hover:opacity-50 transition-opacity"
+                  >
+                    Apply Now
+                  </button>
                 </div>
               </motion.div>
             </div>
@@ -94,7 +108,7 @@ export default function CollaboratePage() {
       </section>
 
       {/* ── Application Form ───────────────────────── */}
-      <section className="w-full bg-[#E9E3DD] py-24 px-8 md:px-16 mt-20">
+      <section id="apply-form" className="w-full bg-[#E9E3DD] py-24 px-8 md:px-16 mt-20 scroll-mt-24">
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}

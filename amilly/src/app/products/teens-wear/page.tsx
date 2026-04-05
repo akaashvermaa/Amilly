@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
 import { SlidersHorizontal, ChevronDown, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import { siteData } from "@/config/siteData";
 
@@ -19,9 +20,11 @@ const sortOptions = siteData.products.shared.sortOptions;
 
 function ProductCard({ product, idx }: { product: typeof products[0]; idx: number }) {
   const [hovered, setHovered] = useState(false);
+  const router = useRouter();
 
   return (
     <motion.div
+      onClick={() => router.push(`/product/teens/${product.id}`)}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}

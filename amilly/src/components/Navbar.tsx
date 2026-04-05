@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { ArrowRight, LogOut } from "lucide-react";
+import { ArrowRight, LogOut, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
@@ -127,8 +127,15 @@ export default function Navbar() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.6 }}
-        className="flex justify-end"
+        className="flex items-center justify-end gap-6"
       >
+        <Link href="/cart" className="hover:opacity-60 transition-opacity flex items-center delay-100">
+          <div className="relative">
+             <ShoppingBag size={22} strokeWidth={1.5} className="text-[#1F1F1F]" />
+             <div className="absolute -top-1 -right-2 w-4 h-4 rounded-full bg-[#1F1F1F] text-[#F3EFEA] flex items-center justify-center text-[9px] font-poppins font-medium">2</div>
+          </div>
+        </Link>
+        
         {isLoggedIn ? (
           <motion.button
             whileHover={{ scale: 1.03 }}
