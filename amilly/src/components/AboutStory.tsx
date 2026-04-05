@@ -1,100 +1,144 @@
 "use client";
+
 import React, { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function AboutStory() {
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
   });
 
-  const y1 = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
-  const y2 = useTransform(scrollYProgress, [0, 1], ["0%", "-15%"]);
+  // Dramatic Parallax Speeds
+  const yUp1 = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
+  const yUp2 = useTransform(scrollYProgress, [0, 1], ["15%", "-15%"]);
+  const yDown = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
 
   return (
-    <section id="collaborate" ref={containerRef} className="relative w-full min-h-screen py-24 px-8 md:px-16 lg:px-24 flex items-center bg-[#E5E2DC] overflow-hidden">
-      <div className="absolute inset-0 z-0">
+    <section 
+      id="about" 
+      ref={containerRef} 
+      className="relative w-full min-h-[140vh] bg-[#111] text-[#F3EFEA] py-32 md:py-48 overflow-hidden flex flex-col justify-center font-poppins selection:bg-[#F3EFEA] selection:text-[#111]"
+    >
+      {/* Background Ambience / Monogram watermark */}
+      <div className="absolute inset-0 z-0 opacity-[0.03] mix-blend-screen pointer-events-none flex items-center justify-center">
          <Image 
           src="/images/Page 3 Background Image.png" 
           alt="Bg 3" 
           fill 
           unoptimized
-          className="object-cover opacity-80" 
+          className="object-cover" 
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-16">
+      <div className="relative z-10 max-w-[1700px] mx-auto w-full px-6 md:px-12 lg:px-20 flex flex-col gap-24 lg:gap-32">
         
-        {/* Text Section */}
-        <motion.div 
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1 }}
-          className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left"
-        >
-          <h2 className="font-junge text-5xl md:text-6xl lg:text-[4.5rem] leading-[1.1] uppercase tracking-[0.2em] text-[#1a1a1a] mb-8">
-            WHY AMILLY
-          </h2>
+        {/* Massive Typographical Statement */}
+        <div className="w-full flex flex-col">
+          <motion.h2 
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="font-aboreto text-[13vw] md:text-[10vw] leading-[0.85] tracking-[0.05em] uppercase text-left"
+          >
+            Timeless
+          </motion.h2>
+          <motion.h2 
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.2, delay: 0.1, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="font-aboreto text-[13vw] md:text-[10vw] leading-[0.85] tracking-[0.05em] uppercase text-right mt-2 md:-mt-8"
+            style={{
+              WebkitTextStroke: "1px rgba(243, 239, 234, 0.6)",
+              color: "transparent"
+            }}
+          >
+            Attitude
+          </motion.h2>
+        </div>
+
+        {/* 3-Column Editorial Asymmetry */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-20 items-center">
           
-          <p className="font-imprima text-lg md:text-xl lg:text-2xl leading-relaxed tracking-[0.1em] lg:tracking-widest text-[#333] mb-12 max-w-lg lg:max-w-xl">
-            AMILLY is built for those who wear confidence as naturally as they wear clothes. 
-            Our pieces blend timeless design with modern attitude, creating styles that feel 
-            effortless yet bold. Every collection is crafted to help you express who you 
-            are—without saying a word.
-          </p>
-
-          <button className="flex items-center gap-3 border border-foreground/30 px-6 py-2 rounded-full hover:bg-foreground hover:text-background transition-all uppercase tracking-widest text-xs font-poppins font-medium group">
-            OUR COLLECTION
-            <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-          </button>
-        </motion.div>
-
-        {/* Collage Section */}
-        <div className="w-full lg:w-1/2 flex flex-col md:flex-row gap-4 h-[600px] perspective-1000">
-          {/* Big Card - Moving slightly down on scroll */}
+          {/* Left Column: Image Parallax Fast Up */}
           <motion.div 
-            style={{ y: y1 }}
-            className="w-full md:w-2/3 h-1/2 md:h-full relative overflow-hidden group bg-[#E5E2DC]/50 rounded-sm transform-gpu will-change-transform"
+            style={{ y: yUp1 }}
+            className="hidden md:block md:col-span-4 h-[600px] lg:h-[800px] relative overflow-hidden group"
           >
             <Image
               src="/images/Why Amilly - Image big Card.jpg"
-              alt="Story 1"
+              alt="Story Primary"
               fill
               unoptimized
-              className="object-cover img-low-sat transition-transform duration-[1.5s] group-hover:scale-110 object-[center_20%]"
+              className="object-cover object-top transition-transform duration-[2s] group-hover:scale-105"
             />
           </motion.div>
-          
-          {/* Right column small cards - Moving slightly up on scroll */}
+
+          {/* Center Column: Narrative Core */}
           <motion.div 
-            style={{ y: y2 }}
-            className="w-full md:w-1/3 flex flex-row md:flex-col gap-4 h-1/2 md:h-full transform-gpu will-change-transform"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="col-span-1 md:col-span-4 flex flex-col justify-center items-center text-center z-20"
           >
-            <div className="w-1/2 md:w-full h-full md:h-1/2 relative overflow-hidden group bg-[#E5E2DC]/50 rounded-sm">
+            <span className="text-[#F3EFEA]/30 text-xs tracking-[10px] uppercase font-semibold mb-8">
+              Why Amilly
+            </span>
+            <p className="font-imprima text-xl md:text-2xl lg:text-3xl leading-relaxed tracking-[1px] md:tracking-[2px] opacity-90 max-w-sm md:max-w-md mb-12">
+              Built for those who wear confidence effortlessly. We blend timeless design with modern audacity, creating pieces that speak for you before you ever say a word.
+            </p>
+            <Link href="/products">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="group relative flex items-center gap-4 text-[#F3EFEA] hover:opacity-70 transition-opacity"
+              >
+                <span className="text-xs md:text-sm font-semibold tracking-[4px] uppercase border-b border-[#F3EFEA]/30 pb-2 transition-colors group-hover:border-[#F3EFEA]">
+                  Explore The Vision
+                </span>
+                <ArrowRight size={18} className="transform group-hover:translate-x-2 transition-transform duration-300" />
+              </motion.button>
+            </Link>
+          </motion.div>
+
+          {/* Right Column: Double Image Stagger (Down & Slow Up) */}
+          <div className="col-span-1 md:col-span-4 flex flex-col gap-12 lg:gap-24 mt-16 md:mt-0">
+            <motion.div 
+              style={{ y: yDown }}
+              className="w-[90%] md:w-full ml-auto h-[400px] lg:h-[500px] relative overflow-hidden group"
+            >
               <Image
                 src="/images/Why Amilly - Image.jpg"
-                alt="Story 2"
+                alt="Story Secondary"
                 fill
                 unoptimized
-                className="object-cover img-low-sat transition-transform duration-[1.5s] group-hover:scale-110 object-center"
+                className="object-cover object-center transition-transform duration-[2s] group-hover:scale-105 grayscale hover:grayscale-0"
               />
-            </div>
-            <div className="w-1/2 md:w-full h-full md:h-1/2 relative overflow-hidden group bg-[#E5E2DC]/50 rounded-sm">
+            </motion.div>
+            
+            <motion.div 
+              style={{ y: yUp2 }}
+              className="w-[75%] h-[250px] lg:h-[350px] relative overflow-hidden group hidden md:block opacity-80 mix-blend-luminosity hover:mix-blend-normal hover:opacity-100 transition-all duration-700"
+            >
               <Image
                 src="/images/Why Amilly -Image.jpg"
-                alt="Story 3"
+                alt="Story Tertiary"
                 fill
                 unoptimized
-                className="object-cover img-low-sat transition-transform duration-[1.5s] group-hover:scale-110 object-top"
+                className="object-cover object-top transition-transform duration-[2s] group-hover:scale-105"
               />
-            </div>
-          </motion.div>
-        </div>
+            </motion.div>
+          </div>
 
+        </div>
       </div>
     </section>
   );
