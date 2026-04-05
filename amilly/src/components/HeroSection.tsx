@@ -3,8 +3,9 @@ import React, { useRef } from "react";
 import Image from "next/image";
 import { ShoppingBag } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { siteData } from "@/config/siteData";
 
-const headlineWords = ["STYLE", "ISN'T", "WORN.", "IT'S", "OWNED."];
+const headlineWords = siteData.hero.headlineWords;
 
 const containerVariants = {
   hidden: {},
@@ -46,7 +47,7 @@ export default function HeroSection() {
         className="absolute inset-0 z-0 h-[120%] transform-gpu will-change-transform"
       >
         <Image
-          src="/images/PAGE 1 BACKGORUND.png"
+          src={siteData.hero.backgroundImage}
           alt="Ammily Hero Background"
           fill
           unoptimized
@@ -82,7 +83,12 @@ export default function HeroSection() {
             transition={{ duration: 0.9, delay: 1.2, ease: "easeOut" }}
             className="font-imprima text-[15px] md:text-[17px] tracking-[0.2em] uppercase text-[#333] mb-12 leading-relaxed"
           >
-            Dress bold. <br /> Live louder.
+            {siteData.hero.subtitle.split("\n").map((line, i) => (
+              <React.Fragment key={i}>
+                {line}
+                <br />
+              </React.Fragment>
+            ))}
           </motion.p>
 
           {/* Button with scale spring */}

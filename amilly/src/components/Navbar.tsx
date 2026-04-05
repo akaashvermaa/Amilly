@@ -4,21 +4,9 @@ import { ArrowRight, LogOut } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
+import { siteData } from "@/config/siteData";
 
-const navLinks = [
-  { label: "Home", href: "/" },
-  { 
-    label: "Products", 
-    href: "/products",
-    dropdown: [
-      { label: "Luxury Suits", href: "/products" },
-      { label: "Casual Women", href: "/products/casual-wear" },
-      { label: "Teens Female", href: "/products/teens-wear" }
-    ]
-  },
-  { label: "Collaborate", href: "/collaborate" },
-  { label: "About Us", href: "/#about" },
-];
+const navLinks = siteData.navLinks;
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -37,12 +25,12 @@ export default function Navbar() {
   const handleAboutUs = (e: React.MouseEvent) => {
     e.preventDefault();
     if (pathname === "/") {
-      document.getElementById("collaborate")?.scrollIntoView({ behavior: "smooth" });
+      document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
     } else {
       router.push("/");
       setTimeout(() => {
-        document.getElementById("collaborate")?.scrollIntoView({ behavior: "smooth" });
-      }, 800);
+        document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+      }, 500);
     }
   };
 

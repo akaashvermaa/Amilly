@@ -7,28 +7,13 @@ import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
 import { SlidersHorizontal, ChevronDown, X } from "lucide-react";
 
-// ─── Data ────────────────────────────────────────────────────────────────────
+import { siteData } from "@/config/siteData";
 
-const categories = ["All", "Two-Piece", "Blazers", "Trousers", "Accessories"];
+const categories = siteData.products.luxury.categories;
+const products = siteData.products.luxury.items;
 
-const products = [
-  { id: 1,  name: "Classic Tailored Suit",      price: 120, category: "Two-Piece",       image: "/images/PRODUCT (1).jpg", pos: "object-top" },
-  { id: 2,  name: "Structured Blazer Set",      price: 145, category: "Blazers",         image: "/images/PRODUCT (2).jpg", pos: "object-center" },
-  { id: 3,  name: "Minimal Power Suit",         price: 160, category: "Two-Piece",       image: "/images/PRODUCT (3).jpg", pos: "object-top" },
-  { id: 4,  name: "Slim Fit Two-Piece",         price: 135, category: "Two-Piece",       image: "/images/PRODUCT (1).jpg", pos: "object-center" },
-  { id: 5,  name: "Pleated Wide Trousers",      price: 98,  category: "Trousers",        image: "/images/PRODUCT (2).jpg", pos: "object-bottom" },
-  { id: 6,  name: "Pinstripe Double Breasted",  price: 188, category: "Blazers",         image: "/images/PRODUCT (3).jpg", pos: "object-center" },
-  { id: 7,  name: "Tailored Cropped Jacket",    price: 110, category: "Blazers",         image: "/images/PRODUCT (1).jpg", pos: "object-bottom" },
-  { id: 8,  name: "Straight Leg Trousers",      price: 130, category: "Trousers",        image: "/images/PRODUCT (2).jpg", pos: "object-top" },
-  { id: 9,  name: "Silk Pocket Square Set",     price: 42,  category: "Accessories",     image: "/images/PRODUCT (3).jpg", pos: "object-bottom" },
-  { id: 10, name: "Leather Belt Duo",           price: 55,  category: "Accessories",     image: "/images/PRODUCT (1).jpg", pos: "object-[center_30%]" },
-  { id: 11, name: "Wool Blend Suit",            price: 175, category: "Two-Piece",       image: "/images/PRODUCT (2).jpg", pos: "object-[center_20%]" },
-  { id: 12, name: "Silver Cufflinks",           price: 65,  category: "Accessories",     image: "/images/PRODUCT (3).jpg", pos: "object-[center_40%]" },
-];
-
-
-const sizes   = ["XS", "S", "M", "L", "XL"];
-const sortOptions = ["Newest", "Price: Low → High", "Price: High → Low"];
+const sizes = siteData.products.shared.sizes;
+const sortOptions = siteData.products.shared.sortOptions;
 
 // ─── Product Card ─────────────────────────────────────────────────────────────
 
@@ -116,12 +101,12 @@ export default function ProductsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }}
         >
-          <p className="font-poppins text-xs tracking-[6px] uppercase opacity-50 mb-3 text-[#1F1F1F]">Luxury Suiting</p>
+          <p className="font-poppins text-xs tracking-[6px] uppercase opacity-50 mb-3 text-[#1F1F1F]">{siteData.products.luxury.subtitle}</p>
           <h1 className="font-aboreto text-4xl md:text-6xl tracking-[6px] uppercase mb-4 text-[#1F1F1F]">
-            {activeCategory === "All" ? "Luxury Suits" : activeCategory}
+            {activeCategory === "All" ? siteData.products.luxury.title : activeCategory}
           </h1>
           <p className="font-imprima text-base md:text-lg opacity-70 tracking-[1px] max-w-xl leading-relaxed text-[#1F1F1F]">
-            Modern tailoring designed for confidence and elegance. Explore refined silhouettes crafted with precision.
+            {siteData.products.luxury.description}
           </p>
         </motion.div>
 

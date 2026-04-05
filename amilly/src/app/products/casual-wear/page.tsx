@@ -7,27 +7,13 @@ import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
 import { SlidersHorizontal, ChevronDown, X } from "lucide-react";
 
-// ─── Data ────────────────────────────────────────────────────────────────────
+import { siteData } from "@/config/siteData";
 
-const categories = ["All", "T-Shirts", "Denim", "Knitwear", "Outerwear"];
+const categories = siteData.products.casual.categories;
+const products = siteData.products.casual.items;
 
-const products = [
-  { id: 1,  name: "Heavyweight Box Tee",     price: 45, category: "T-Shirts",       image: "/images/PRODUCT (1).jpg", pos: "object-top" },
-  { id: 2,  name: "Relaxed Straight Denim",  price: 95, category: "Denim",          image: "/images/PRODUCT (2).jpg", pos: "object-center" },
-  { id: 3,  name: "Oversized Wool Blend Sweater", price: 110, category: "Knitwear", image: "/images/PRODUCT (3).jpg", pos: "object-top" },
-  { id: 4,  name: "Vintage Wash Hoodie",     price: 75, category: "Outerwear",      image: "/images/PRODUCT (1).jpg", pos: "object-center" },
-  { id: 5,  name: "Everyday Basic Tee",      price: 35, category: "T-Shirts",       image: "/images/PRODUCT (2).jpg", pos: "object-bottom" },
-  { id: 6,  name: "Wide Leg Carpenter Jeans",price: 115, category: "Denim",         image: "/images/PRODUCT (3).jpg", pos: "object-center" },
-  { id: 7,  name: "Utility Overshirt",       price: 85, category: "Outerwear",      image: "/images/PRODUCT (1).jpg", pos: "object-bottom" },
-  { id: 8,  name: "Chunky Cable Knit",       price: 130, category: "Knitwear",      image: "/images/PRODUCT (2).jpg", pos: "object-top" },
-  { id: 9,  name: "Graphic Print Tee",       price: 40, category: "T-Shirts",       image: "/images/PRODUCT (3).jpg", pos: "object-bottom" },
-  { id: 10, name: "Slim Tapered Denim",      price: 90, category: "Denim",          image: "/images/PRODUCT (1).jpg", pos: "object-[center_30%]" },
-  { id: 11, name: "Lightweight Bomber",      price: 145, category: "Outerwear",     image: "/images/PRODUCT (2).jpg", pos: "object-[center_20%]" },
-  { id: 12, name: "Ribbed Turtleneck",       price: 65, category: "Knitwear",       image: "/images/PRODUCT (3).jpg", pos: "object-[center_40%]" },
-];
-
-const sizes   = ["XS", "S", "M", "L", "XL"];
-const sortOptions = ["Newest", "Price: Low → High", "Price: High → Low"];
+const sizes = siteData.products.shared.sizes;
+const sortOptions = siteData.products.shared.sortOptions;
 
 // ─── Product Card ─────────────────────────────────────────────────────────────
 
@@ -115,12 +101,12 @@ export default function CasualWearPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }}
         >
-          <p className="font-poppins text-xs tracking-[6px] uppercase opacity-50 mb-3 text-[#1F1F1F]">Casual Collection</p>
+          <p className="font-poppins text-xs tracking-[6px] uppercase opacity-50 mb-3 text-[#1F1F1F]">{siteData.products.casual.subtitle}</p>
           <h1 className="font-aboreto text-4xl md:text-6xl tracking-[6px] uppercase mb-4 text-[#1F1F1F]">
-            {activeCategory === "All" ? "Casual Womenswear" : activeCategory}
+            {activeCategory === "All" ? siteData.products.casual.title : activeCategory}
           </h1>
           <p className="font-imprima text-base md:text-lg opacity-70 tracking-[1px] max-w-xl leading-relaxed text-[#1F1F1F]">
-            Effortless everyday styles built for comfort and understated attitude. Designed for the modern muse.
+            {siteData.products.casual.description}
           </p>
         </motion.div>
 

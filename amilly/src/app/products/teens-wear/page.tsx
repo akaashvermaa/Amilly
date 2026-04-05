@@ -7,28 +7,13 @@ import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
 import { SlidersHorizontal, ChevronDown, X } from "lucide-react";
 
-// ─── Data ────────────────────────────────────────────────────────────────────
+import { siteData } from "@/config/siteData";
 
-const categories = ["All", "Tops", "Skirts", "Dresses", "Activewear"];
+const categories = siteData.products.teens.categories;
+const products = siteData.products.teens.items;
 
-const products = [
-  { id: 1,  name: "Cropped Graphic Baby Tee",  price: 35, category: "Tops",        image: "/images/PRODUCT (1).jpg", pos: "object-top" },
-  { id: 2,  name: "Pleated Tennis Skirt",      price: 45, category: "Skirts",      image: "/images/PRODUCT (2).jpg", pos: "object-center" },
-  { id: 3,  name: "Ribbed Knit Mini Dress",    price: 65, category: "Dresses",     image: "/images/PRODUCT (3).jpg", pos: "object-top" },
-  { id: 4,  name: "Oversized Zip Hoodie",      price: 75, category: "Activewear",  image: "/images/PRODUCT (1).jpg", pos: "object-center" },
-  { id: 5,  name: "Y2K Cargo Midi Skirt",      price: 55, category: "Skirts",      image: "/images/PRODUCT (2).jpg", pos: "object-bottom" },
-  { id: 6,  name: "Seamless Workout Set",      price: 85, category: "Activewear",  image: "/images/PRODUCT (3).jpg", pos: "object-center" },
-  { id: 7,  name: "Cutout Halter Top",         price: 40, category: "Tops",        image: "/images/PRODUCT (1).jpg", pos: "object-bottom" },
-  { id: 8,  name: "Denim Overall Dress",       price: 70, category: "Dresses",     image: "/images/PRODUCT (2).jpg", pos: "object-top" },
-  { id: 9,  name: "Corset Style Tank",         price: 45, category: "Tops",        image: "/images/PRODUCT (3).jpg", pos: "object-bottom" },
-  { id: 10, name: "Flared Yoga Pants",         price: 50, category: "Activewear",  image: "/images/PRODUCT (1).jpg", pos: "object-[center_30%]" },
-  { id: 11, name: "Slip Maxi Dress",           price: 90, category: "Dresses",     image: "/images/PRODUCT (2).jpg", pos: "object-[center_20%]" },
-  { id: 12, name: "Asymmetric Maxi Skirt",     price: 60, category: "Skirts",      image: "/images/PRODUCT (3).jpg", pos: "object-[center_40%]" },
-];
-
-
-const sizes   = ["XS", "S", "M", "L", "XL"];
-const sortOptions = ["Newest", "Price: Low → High", "Price: High → Low"];
+const sizes = siteData.products.shared.sizes;
+const sortOptions = siteData.products.shared.sortOptions;
 
 // ─── Product Card ─────────────────────────────────────────────────────────────
 
@@ -116,12 +101,12 @@ export default function TeensWearPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }}
         >
-          <p className="font-poppins text-xs tracking-[6px] uppercase opacity-50 mb-3 text-[#1F1F1F]">Teens Collection</p>
+          <p className="font-poppins text-xs tracking-[6px] uppercase opacity-50 mb-3 text-[#1F1F1F]">{siteData.products.teens.subtitle}</p>
           <h1 className="font-aboreto text-4xl md:text-6xl tracking-[6px] uppercase mb-4 text-[#1F1F1F]">
-            {activeCategory === "All" ? "Female Teens Wear" : activeCategory}
+            {activeCategory === "All" ? siteData.products.teens.title : activeCategory}
           </h1>
           <p className="font-imprima text-base md:text-lg opacity-70 tracking-[1px] max-w-xl leading-relaxed text-[#1F1F1F]">
-            Youthful, energetic, and unapologetic styles for the next generation of fashion icons.
+            {siteData.products.teens.description}
           </p>
         </motion.div>
 

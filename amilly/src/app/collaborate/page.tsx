@@ -6,31 +6,9 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-// ─── Data ────────────────────────────────────────────────────────────────────
+import { siteData } from "@/config/siteData";
 
-const collaborationTypes = [
-  {
-    id: 1,
-    title: "Brand Ambassadors",
-    desc: "For those who embody the AMMILY lifestyle. We partner with digital creators to showcase our timeless pieces in modern, everyday contexts.",
-    image: "/images/Feature 1.jpg",
-    imgPos: "object-top",
-  },
-  {
-    id: 2,
-    title: "Editorial Stylists",
-    desc: "We provide exclusive access to upcoming collections for fashion stylists pulling for high-end editorials, red carpets, and creative magazines.",
-    image: "/images/BOY FEATURING.jpg",
-    imgPos: "object-center",
-  },
-  {
-    id: 3,
-    title: "Creative Photographers",
-    desc: "Visionaries who capture elegance. We collaborate on unique campaign shoots, lookbooks, and visual storytelling that align with our brand identity.",
-    image: "/images/Feature 2 (1).jpg",
-    imgPos: "object-top",
-  },
-];
+const collaborationTypes = siteData.collaborate.types;
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -49,13 +27,12 @@ export default function CollaboratePage() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }}
           className="max-w-4xl"
         >
-          <p className="text-xs font-semibold tracking-[6px] uppercase opacity-50 mb-6">Partnerships</p>
+          <p className="text-xs font-semibold tracking-[6px] uppercase opacity-50 mb-6">{siteData.collaborate.pageSubtitle}</p>
           <h1 className="font-aboreto text-5xl md:text-7xl lg:text-[5.5rem] leading-[1.1] uppercase tracking-[4px] mb-8">
-            Become a Muse
+            {siteData.collaborate.pageTitle}
           </h1>
           <p className="font-imprima text-lg md:text-xl opacity-70 tracking-[1px] leading-relaxed max-w-2xl mx-auto">
-            We are constantly seeking creative visionaries to join our narrative. 
-            Whether you photograph elegance, style it, or wear it effortlessly—we want to create with you.
+            {siteData.collaborate.pageDescription}
           </p>
         </motion.div>
       </section>
@@ -126,8 +103,8 @@ export default function CollaboratePage() {
           className="max-w-xl mx-auto bg-[#F7F4F1] p-10 md:p-14 rounded-3xl shadow-xl flex flex-col"
         >
           <div className="text-center mb-10">
-            <h3 className="font-aboreto text-4xl tracking-[2px] uppercase mb-3">Initiate Contact</h3>
-            <p className="font-imprima text-base opacity-70 tracking-[1px]">Introduce yourself and submit your portfolio.</p>
+            <h3 className="font-aboreto text-4xl tracking-[2px] uppercase mb-3">{siteData.collaborate.formTitle}</h3>
+            <p className="font-imprima text-base opacity-70 tracking-[1px]">{siteData.collaborate.formSubtitle}</p>
           </div>
 
           <form className="flex flex-col gap-8" onSubmit={(e) => e.preventDefault()}>

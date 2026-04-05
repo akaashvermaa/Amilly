@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { siteData } from "@/config/siteData";
 
 export default function AboutStory() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -28,7 +29,7 @@ export default function AboutStory() {
       {/* Background Ambience / Monogram watermark */}
       <div className="absolute inset-0 z-0 opacity-[0.03] mix-blend-screen pointer-events-none flex items-center justify-center">
          <Image 
-          src="/images/Page 3 Background Image.png" 
+          src={siteData.aboutStory.backgroundImage}
           alt="Bg 3" 
           fill 
           unoptimized
@@ -47,7 +48,7 @@ export default function AboutStory() {
             viewport={{ once: true, margin: "-100px" }}
             className="font-aboreto text-[13vw] md:text-[10vw] leading-[0.85] tracking-[0.05em] uppercase text-left"
           >
-            Timeless
+            {siteData.aboutStory.watermarkLeft}
           </motion.h2>
           <motion.h2 
             initial={{ opacity: 0, x: 60 }}
@@ -60,7 +61,7 @@ export default function AboutStory() {
               color: "transparent"
             }}
           >
-            Attitude
+            {siteData.aboutStory.watermarkRight}
           </motion.h2>
         </div>
 
@@ -73,7 +74,7 @@ export default function AboutStory() {
             className="hidden md:block md:col-span-4 h-[600px] lg:h-[800px] relative overflow-hidden group"
           >
             <Image
-              src="/images/Why Amilly - Image big Card.jpg"
+              src={siteData.aboutStory.images.leftTall}
               alt="Story Primary"
               fill
               unoptimized
@@ -90,10 +91,10 @@ export default function AboutStory() {
             className="col-span-1 md:col-span-4 flex flex-col justify-center items-center text-center z-20"
           >
             <span className="text-[#F3EFEA]/30 text-xs tracking-[10px] uppercase font-semibold mb-8">
-              Why Amilly
+              {siteData.aboutStory.sectionTitle}
             </span>
             <p className="font-imprima text-xl md:text-2xl lg:text-3xl leading-relaxed tracking-[1px] md:tracking-[2px] opacity-90 max-w-sm md:max-w-md mb-12">
-              Built for those who wear confidence effortlessly. We blend timeless design with modern audacity, creating pieces that speak for you before you ever say a word.
+              {siteData.aboutStory.paragraph}
             </p>
             <Link href="/products">
               <motion.button
@@ -102,7 +103,7 @@ export default function AboutStory() {
                 className="group relative flex items-center gap-4 text-[#F3EFEA] hover:opacity-70 transition-opacity"
               >
                 <span className="text-xs md:text-sm font-semibold tracking-[4px] uppercase border-b border-[#F3EFEA]/30 pb-2 transition-colors group-hover:border-[#F3EFEA]">
-                  Explore The Vision
+                  {siteData.aboutStory.buttonText}
                 </span>
                 <ArrowRight size={18} className="transform group-hover:translate-x-2 transition-transform duration-300" />
               </motion.button>
@@ -116,7 +117,7 @@ export default function AboutStory() {
               className="w-[90%] md:w-full ml-auto h-[400px] lg:h-[500px] relative overflow-hidden group"
             >
               <Image
-                src="/images/Why Amilly - Image.jpg"
+                src={siteData.aboutStory.images.rightTop}
                 alt="Story Secondary"
                 fill
                 unoptimized
@@ -129,7 +130,7 @@ export default function AboutStory() {
               className="w-[75%] h-[250px] lg:h-[350px] relative overflow-hidden group hidden md:block opacity-80 mix-blend-luminosity hover:mix-blend-normal hover:opacity-100 transition-all duration-700"
             >
               <Image
-                src="/images/Why Amilly -Image.jpg"
+                src={siteData.aboutStory.images.rightBottom}
                 alt="Story Tertiary"
                 fill
                 unoptimized

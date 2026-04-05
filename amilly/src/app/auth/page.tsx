@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { siteData } from "@/config/siteData";
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(false);
@@ -200,7 +201,7 @@ export default function AuthPage() {
         className="hidden lg:block lg:w-[55%] h-full relative"
       >
         <Image
-          src="/images/Login_Create Accoutn background Image.jpg"
+          src={siteData.auth.editorialImage}
           alt="Fashion Models"
           fill
           className="object-cover object-[center_30%]"
@@ -218,8 +219,7 @@ export default function AuthPage() {
           transition={{ delay: 0.8, duration: 1 }}
           className="absolute bottom-12 right-12 text-white text-right mix-blend-difference"
         >
-          <p className="font-aboreto text-3xl tracking-[12px] uppercase opacity-90">Elegance</p>
-          <p className="font-poppins text-xs tracking-[8px] uppercase mt-2 opacity-70">Redefined</p>
+          <p className="font-aboreto text-3xl tracking-[12px] uppercase opacity-90">{siteData.auth.floatingText}</p>
         </motion.div>
       </motion.div>
 
