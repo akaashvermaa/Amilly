@@ -54,9 +54,9 @@ export default function HeroSection() {
           className="object-cover object-top opacity-90 transition-opacity duration-1000"
           priority
         />
-        {/* Cinematic Vignette Overlay (Reduced Blend Modes for 60fps Performance) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#111]/70 via-[#111]/20 to-transparent"></div>
-        <div className="absolute inset-0 bg-black/20"></div>
+        {/* Cinematic Vignette Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#F3EFEA]/80 via-[#F3EFEA]/20 to-transparent mix-blend-multiply"></div>
+        <div className="absolute inset-0 bg-black/10"></div>
       </motion.div>
 
       {/* Main Content */}
