@@ -44,25 +44,25 @@ export default function HeroSection() {
       {/* Background Image with Deep Parallax */}
       <motion.div
         style={{ y: imageY }}
-        className="parallax-layer absolute inset-0 z-0 h-[120%]"
+        className="parallax-layer absolute inset-0 z-0 h-[120%] will-change-transform"
       >
         <Image
           src={siteData.hero.backgroundImage}
           alt="Ammily Hero Background"
           fill
-          unoptimized
+          quality={90}
           className="object-cover object-top opacity-90 transition-opacity duration-1000"
           priority
         />
-        {/* Cinematic Vignette Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#F3EFEA]/80 via-[#F3EFEA]/20 to-transparent mix-blend-multiply"></div>
-        <div className="absolute inset-0 bg-black/10"></div>
+        {/* Cinematic Vignette Overlay (Reduced Blend Modes for 60fps Performance) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#111]/70 via-[#111]/20 to-transparent"></div>
+        <div className="absolute inset-0 bg-black/20"></div>
       </motion.div>
 
       {/* Main Content */}
       <motion.div
         style={{ y: textY, opacity }}
-        className="motion-safe relative z-10 w-full px-8 md:px-16 lg:px-24 h-full flex flex-col justify-center"
+        className="motion-safe relative z-10 w-full px-8 md:px-16 lg:px-24 h-full flex flex-col justify-center will-change-transform"
       >
         <div className="max-w-2xl mt-20">
           

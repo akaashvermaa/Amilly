@@ -18,7 +18,7 @@ export default function NewArrivals() {
           src={siteData.newArrivals.backgroundImage} 
           alt="Bg" 
           fill 
-          unoptimized
+          quality={80}
           className="object-cover object-top grayscale" 
         />
       </div>
@@ -66,7 +66,8 @@ export default function NewArrivals() {
                   src={prod.image}
                   alt={`New Arrival ${prod.id}`}
                   fill
-                  unoptimized
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  quality={85}
                   className="object-cover object-top transition-transform duration-[1.5s] group-hover:scale-105"
                 />
                 

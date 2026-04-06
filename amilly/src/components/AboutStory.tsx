@@ -32,7 +32,7 @@ export default function AboutStory() {
           src={siteData.aboutStory.backgroundImage}
           alt="Bg 3" 
           fill 
-          unoptimized
+          quality={80}
           className="object-cover" 
         />
       </div>
@@ -71,13 +71,13 @@ export default function AboutStory() {
           {/* Left Column: Image Parallax Fast Up */}
           <motion.div 
             style={{ y: yUp1 }}
-            className="parallax-layer hidden md:block md:col-span-4 h-[600px] lg:h-[800px] relative overflow-hidden group"
+            className="parallax-layer hidden md:block md:col-span-4 h-[600px] lg:h-[800px] relative overflow-hidden group will-change-transform"
           >
             <Image
               src={siteData.aboutStory.images.leftTall}
               alt="Story Primary"
               fill
-              unoptimized
+              quality={85}
               className="object-cover object-top transition-transform duration-[2s] group-hover:scale-105"
             />
           </motion.div>
@@ -114,26 +114,26 @@ export default function AboutStory() {
           <div className="col-span-1 md:col-span-4 flex flex-col gap-12 lg:gap-24 mt-16 md:mt-0">
             <motion.div 
               style={{ y: yDown }}
-              className="parallax-layer w-[90%] md:w-full ml-auto h-[400px] lg:h-[500px] relative overflow-hidden group"
+              className="parallax-layer w-[90%] md:w-full ml-auto h-[400px] lg:h-[500px] relative overflow-hidden group will-change-transform"
             >
               <Image
                 src={siteData.aboutStory.images.rightTop}
                 alt="Story Secondary"
                 fill
-                unoptimized
+                quality={85}
                 className="object-cover object-center transition-transform duration-[2s] group-hover:scale-105 grayscale hover:grayscale-0"
               />
             </motion.div>
             
             <motion.div 
               style={{ y: yUp2 }}
-              className="parallax-layer w-[75%] h-[250px] lg:h-[350px] relative overflow-hidden group hidden md:block opacity-80 mix-blend-luminosity hover:mix-blend-normal hover:opacity-100 transition-all duration-700"
+              className="parallax-layer w-[75%] h-[250px] lg:h-[350px] relative overflow-hidden group hidden md:block opacity-80 mix-blend-luminosity hover:mix-blend-normal hover:opacity-100 transition-all duration-700 will-change-transform"
             >
               <Image
                 src={siteData.aboutStory.images.rightBottom}
                 alt="Story Tertiary"
                 fill
-                unoptimized
+                quality={85}
                 className="object-cover object-top transition-transform duration-[2s] group-hover:scale-105"
               />
             </motion.div>
