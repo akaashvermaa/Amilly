@@ -32,7 +32,7 @@ To run the project locally:
    npm run dev
    ```
 
-4. View the application by opening `http://localhost:3000` in your browser.
+4. View the application by opening `https://clothing-brand-delta.vercel.app/` in your browser.
 
 ## Vercel Deployment
 
