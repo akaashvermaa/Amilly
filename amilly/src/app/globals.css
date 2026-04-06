@@ -23,16 +23,66 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
+  /* Prevent subpixel rendering flicker */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── GPU Acceleration ─────────────────────────────────────── */
+/* Applied to any element that animates transform/opacity */
+.motion-safe {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Applied specifically to parallax scroll elements */
+.parallax-layer {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* ── Page Transitions ─────────────────────────────────────── */
+.page-enter {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* ── Reduced Motion ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 @layer utilities {
   .img-low-sat {
-    /* Very subtle yellowish / warm tone, not overly black or crushed */
     filter: sepia(15%) saturate(85%) contrast(100%) brightness(100%);
-    transition: filter 0.5s ease;
+    /* Don't animate filter — causes heavy GPU usage & stutter */
+    /* Hover handled via parent hover instead */
   }
-  
-  .img-low-sat:hover {
+
+  .group:hover .img-low-sat {
     filter: sepia(0%) saturate(100%) contrast(100%);
+    transition: filter 0.8s ease;
+  }
+
+  /* Crisp image rendering for large hero images */
+  .img-crisp {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
   }
 }
+

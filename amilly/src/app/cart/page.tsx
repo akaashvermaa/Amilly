@@ -60,7 +60,7 @@ export default function CartPage() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-24 items-start">
           
           {/* ── LEFT: Order Summary ─────────────────────────────────────────── */}
           <div className="lg:col-span-7 flex flex-col gap-10">
@@ -73,7 +73,7 @@ export default function CartPage() {
                 className="flex gap-6 pb-10 border-b border-[#1F1F1F]/10 group"
               >
                 {/* Image */}
-                <div className="relative w-32 h-44 bg-[#E8E2DC] rounded-none overflow-hidden shrink-0">
+                <div className="relative w-24 h-36 md:w-32 md:h-44 bg-[#E8E2DC] rounded-none overflow-hidden shrink-0">
                   <Image
                     src={item.image}
                     alt={item.name}

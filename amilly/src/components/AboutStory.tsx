@@ -71,7 +71,7 @@ export default function AboutStory() {
           {/* Left Column: Image Parallax Fast Up */}
           <motion.div 
             style={{ y: yUp1 }}
-            className="hidden md:block md:col-span-4 h-[600px] lg:h-[800px] relative overflow-hidden group"
+            className="parallax-layer hidden md:block md:col-span-4 h-[600px] lg:h-[800px] relative overflow-hidden group"
           >
             <Image
               src={siteData.aboutStory.images.leftTall}
@@ -87,8 +87,8 @@ export default function AboutStory() {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="col-span-1 md:col-span-4 flex flex-col justify-center items-center text-center z-20"
+            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }}
+            className="motion-safe col-span-1 md:col-span-4 flex flex-col justify-center items-center text-center z-20"
           >
             <span className="text-[#F3EFEA]/30 text-xs tracking-[10px] uppercase font-semibold mb-8">
               {siteData.aboutStory.sectionTitle}
@@ -114,7 +114,7 @@ export default function AboutStory() {
           <div className="col-span-1 md:col-span-4 flex flex-col gap-12 lg:gap-24 mt-16 md:mt-0">
             <motion.div 
               style={{ y: yDown }}
-              className="w-[90%] md:w-full ml-auto h-[400px] lg:h-[500px] relative overflow-hidden group"
+              className="parallax-layer w-[90%] md:w-full ml-auto h-[400px] lg:h-[500px] relative overflow-hidden group"
             >
               <Image
                 src={siteData.aboutStory.images.rightTop}
@@ -127,7 +127,7 @@ export default function AboutStory() {
             
             <motion.div 
               style={{ y: yUp2 }}
-              className="w-[75%] h-[250px] lg:h-[350px] relative overflow-hidden group hidden md:block opacity-80 mix-blend-luminosity hover:mix-blend-normal hover:opacity-100 transition-all duration-700"
+              className="parallax-layer w-[75%] h-[250px] lg:h-[350px] relative overflow-hidden group hidden md:block opacity-80 mix-blend-luminosity hover:mix-blend-normal hover:opacity-100 transition-all duration-700"
             >
               <Image
                 src={siteData.aboutStory.images.rightBottom}

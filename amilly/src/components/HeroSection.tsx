@@ -32,8 +32,8 @@ export default function HeroSection() {
   });
 
   const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "35%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
   return (
     <section
@@ -44,7 +44,7 @@ export default function HeroSection() {
       {/* Background Image with Deep Parallax */}
       <motion.div
         style={{ y: imageY }}
-        className="absolute inset-0 z-0 h-[120%] transform-gpu"
+        className="parallax-layer absolute inset-0 z-0 h-[120%]"
       >
         <Image
           src={siteData.hero.backgroundImage}
@@ -62,7 +62,7 @@ export default function HeroSection() {
       {/* Main Content */}
       <motion.div
         style={{ y: textY, opacity }}
-        className="relative z-10 w-full px-8 md:px-16 lg:px-24 h-full flex flex-col justify-center"
+        className="motion-safe relative z-10 w-full px-8 md:px-16 lg:px-24 h-full flex flex-col justify-center"
       >
         <div className="max-w-2xl mt-20">
           

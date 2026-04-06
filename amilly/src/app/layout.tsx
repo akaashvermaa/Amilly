@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Jura, Poppins, Imprima, Junge, Aboreto } from "next/font/google";
 import "./globals.css";
+import PageTransition from "@/components/PageTransition";
 
 const jura = Jura({
   variable: "--font-jura",
@@ -47,7 +48,9 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${jura.variable} ${poppins.variable} ${imprima.variable} ${junge.variable} ${aboreto.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-poppins ">{children}</body>
+      <body className="min-h-full flex flex-col font-poppins">
+        <PageTransition>{children}</PageTransition>
+      </body>
     </html>
   );
 }
