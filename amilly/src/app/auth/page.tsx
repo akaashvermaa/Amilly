@@ -9,14 +9,21 @@ import { siteData } from "@/config/siteData";
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(false);
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
   const router = useRouter();
 
   const handleAuth = () => {
+    if (!isLogin && !agreeToTerms) {
+      return;
+    }
     localStorage.setItem("mockAuth", "true");
     router.push("/");
   };
 
-  const handleToggle = () => setIsLogin((prev) => !prev);
+  const handleToggle = () => {
+    setIsLogin((prev) => !prev);
+    setAgreeToTerms(false);
+  };
 
   return (
     <div className="relative w-full h-screen flex font-poppins text-[#1F1F1F] bg-[#F3EFEA] overflow-hidden">
@@ -102,16 +109,27 @@ export default function AuthPage() {
                   </motion.div>
 
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="flex items-center gap-3 mt-2">
-                    <input type="checkbox" id="terms" className="w-4 h-4 border border-[#1F1F1F] rounded-none accent-[#1F1F1F]" />
+                    <input
+                      type="checkbox"
+                      id="terms"
+                      checked={agreeToTerms}
+                      onChange={(e) => setAgreeToTerms(e.target.checked)}
+                      className="w-4 h-4 border border-[#1F1F1F] rounded-none accent-[#1F1F1F] cursor-pointer"
+                    />
                     <label htmlFor="terms" className="text-xs font-medium tracking-[1px] text-[#1F1F1F]/70 cursor-pointer">I agree to Terms & Conditions</label>
                   </motion.div>
 
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-4">
                     <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                      whileHover={agreeToTerms ? { scale: 1.02 } : {}}
+                      whileTap={agreeToTerms ? { scale: 0.98 } : {}}
                       onClick={handleAuth}
-                      className="w-full bg-[#1F1F1F] text-[#F3EFEA] py-4 uppercase font-semibold tracking-[4px] text-xs hover:bg-black transition-colors"
+                      disabled={!agreeToTerms}
+                      className={`w-full py-4 uppercase font-semibold tracking-[4px] text-xs transition-colors ${
+                        agreeToTerms
+                          ? "bg-[#1F1F1F] text-[#F3EFEA] hover:bg-black cursor-pointer"
+                          : "bg-[#1F1F1F]/40 text-[#F3EFEA]/40 cursor-not-allowed"
+                      }`}
                     >
                       Create Account
                     </motion.button>

@@ -1,37 +1,35 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Trash2, Lock, ArrowRight } from "lucide-react";
+import { Trash2, Lock, ArrowRight, Plus, Minus } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-
-// Mock Data for aesthetics
-const mockCartOptions = [
-  {
-    id: 1,
-    name: "Classic Tailored Suit",
-    category: "Two-Piece",
-    price: 120,
-    size: "M",
-    image: "/images/PRODUCT (1).jpg",
-    pos: "object-top"
-  },
-  {
-    id: 2,
-    name: "Straight Leg Trousers",
-    category: "Trousers",
-    price: 130,
-    size: "S",
-    image: "/images/PRODUCT (2).jpg",
-    pos: "object-top"
-  }
-];
+import { useCart } from "@/hooks/useCart";
 
 export default function CartPage() {
-  const subtotal = mockCartOptions.reduce((acc, curr) => acc + curr.price, 0);
-  const shipping = 25;
+  const { cartItems, removeFromCart, updateQuantity, getTotal, isLoaded } = useCart();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || !isLoaded) {
+    return (
+      <main className="relative w-full min-h-screen font-poppins text-[#1F1F1F] bg-[#F3EFEA]">
+        <Navbar />
+        <section className="pt-36 pb-20 px-8 md:px-16 max-w-[1400px] mx-auto min-h-[85vh] flex items-center justify-center">
+          <p className="text-center text-sm opacity-50">Loading cart...</p>
+        </section>
+        <Footer />
+      </main>
+    );
+  }
+
+  const subtotal = getTotal();
+  const shipping = cartItems.length > 0 ? 25 : 0;
   const total = subtotal + shipping;
 
   return (
@@ -39,10 +37,10 @@ export default function CartPage() {
       <Navbar />
 
       <section className="pt-36 pb-20 px-8 md:px-16 max-w-[1400px] mx-auto min-h-[85vh]">
-        
+
         {/* Page Header */}
         <div className="mb-14">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -56,17 +54,30 @@ export default function CartPage() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="font-imprima text-sm tracking-[2px] opacity-60 uppercase"
           >
-            2 Items Reserved
+            {cartItems.length === 0 ? "Your cart is empty" : `${cartItems.reduce((sum, item) => sum + item.quantity, 0)} Items`}
           </motion.p>
         </div>
 
+        {cartItems.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col items-center justify-center min-h-[50vh] gap-6"
+          >
+            <p className="text-center text-sm opacity-50">No items in your cart yet.</p>
+            <a href="/products" className="text-xs uppercase tracking-[3px] border border-[#1F1F1F] px-6 py-3 rounded-full hover:bg-[#1F1F1F] hover:text-[#F3EFEA] transition-all">
+              Continue Shopping
+            </a>
+          </motion.div>
+        ) : (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-24 items-start">
-          
+
           {/* ── LEFT: Order Summary ─────────────────────────────────────────── */}
           <div className="lg:col-span-7 flex flex-col gap-10">
-            {mockCartOptions.map((item, idx) => (
-              <motion.div 
-                key={item.id}
+            {cartItems.map((item, idx) => (
+              <motion.div
+                key={`${item.id}-${item.size}`}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: idx * 0.15 }}
@@ -82,16 +93,16 @@ export default function CartPage() {
                     className={`object-cover ${item.pos} grayscale-[30%] group-hover:grayscale-0 transition-all duration-700`}
                   />
                 </div>
-                
+
                 {/* Item Details */}
                 <div className="flex flex-col justify-between flex-1 py-1">
                   <div>
                     <div className="flex justify-between items-start mb-1">
                       <h3 className="font-imprima text-xl tracking-[1px] font-semibold">{item.name}</h3>
-                      <p className="font-poppins font-medium">${item.price}</p>
+                      <p className="font-poppins font-medium">${(item.price * item.quantity).toFixed(2)}</p>
                     </div>
                     <p className="text-xs uppercase tracking-[2px] opacity-50 mb-4">{item.category}</p>
-                    
+
                     <div className="flex items-center gap-4">
                       <div className="flex flex-col gap-1">
                         <span className="text-[10px] uppercase tracking-[2px] opacity-40">Size</span>
@@ -100,7 +111,21 @@ export default function CartPage() {
                       <div className="w-[1px] h-6 bg-[#1F1F1F]/20 mx-2"></div>
                       <div className="flex flex-col gap-1">
                         <span className="text-[10px] uppercase tracking-[2px] opacity-40">Qty</span>
-                        <span className="text-sm font-medium">1</span>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => updateQuantity(item.id, item.size, item.quantity - 1)}
+                            className="p-1 hover:bg-[#E8E2DC] rounded transition-colors"
+                          >
+                            <Minus size={14} />
+                          </button>
+                          <span className="text-sm font-medium w-6 text-center">{item.quantity}</span>
+                          <button
+                            onClick={() => updateQuantity(item.id, item.size, item.quantity + 1)}
+                            className="p-1 hover:bg-[#E8E2DC] rounded transition-colors"
+                          >
+                            <Plus size={14} />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -109,7 +134,10 @@ export default function CartPage() {
                     <button className="text-xs uppercase tracking-[2px] border-b border-[#1F1F1F]/30 pb-0.5 hover:border-[#1F1F1F] opacity-70 hover:opacity-100 transition-all">
                       Move to Wishlist
                     </button>
-                    <button className="opacity-40 hover:opacity-100 transition-opacity">
+                    <button
+                      onClick={() => removeFromCart(item.id, item.size)}
+                      className="opacity-40 hover:opacity-100 transition-opacity"
+                    >
                       <Trash2 size={16} strokeWidth={1.5} />
                     </button>
                   </div>
@@ -180,6 +208,7 @@ export default function CartPage() {
           </motion.div>
 
         </div>
+        )}
       </section>
 
       <Footer />

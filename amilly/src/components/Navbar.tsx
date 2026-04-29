@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { siteData } from "@/config/siteData";
+import { useCart } from "@/hooks/useCart";
 
 const navLinks = siteData.navLinks;
 
@@ -12,10 +13,20 @@ export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const { getItemCount } = useCart();
+  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     setIsLoggedIn(localStorage.getItem("mockAuth") === "true");
-  }, []);
+    setCartCount(getItemCount());
+
+    const handleCartUpdate = () => {
+      setCartCount(getItemCount());
+    };
+    window.addEventListener("storage", handleCartUpdate);
+    return () => window.removeEventListener("storage", handleCartUpdate);
+  }, [getItemCount]);
+
 
   const handleLogout = () => {
     localStorage.removeItem("mockAuth");
@@ -51,7 +62,7 @@ export default function Navbar() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-      className="absolute top-0 left-0 w-full z-50 px-8 lg:px-12 py-8 grid grid-cols-3 items-center text-foreground font-poppins text-sm uppercase tracking-[4px] bg-transparent"
+      className="absolute top-0 left-0 w-full z-50 px-6 lg:px-12 py-6 flex items-center justify-between text-foreground font-poppins text-sm uppercase tracking-[4px] bg-transparent"
     >
       {/* Left: Logo */}
       <motion.div
@@ -63,8 +74,8 @@ export default function Navbar() {
         AMMILY
       </motion.div>
 
-      {/* Center: Navigation Links */}
-      <div className="hidden md:flex justify-between w-[450px] lg:w-[550px] font-medium text-[#2a2a2a] tracking-[4px] mx-auto">
+      {/* Center: Navigation Links + Search */}
+      <div className="hidden lg:flex items-center font-medium text-[#2a2a2a] tracking-[4px] gap-8 justify-center flex-1">
         {navLinks.map((link, i) => (
           <motion.div
             key={link.label}
@@ -132,7 +143,11 @@ export default function Navbar() {
         <Link href="/cart" className="hover:opacity-60 transition-opacity flex items-center delay-100">
           <div className="relative">
              <ShoppingBag size={22} strokeWidth={1.5} className="text-[#1F1F1F]" />
-             <div className="absolute -top-1 -right-2 w-4 h-4 rounded-full bg-[#1F1F1F] text-[#F3EFEA] flex items-center justify-center text-[9px] font-poppins font-medium">2</div>
+             {cartCount > 0 && (
+              <div className="absolute -top-1 -right-2 w-4 h-4 rounded-full bg-[#1F1F1F] text-[#F3EFEA] flex items-center justify-center text-[9px] font-poppins font-medium">
+                {cartCount > 9 ? "9+" : cartCount}
+              </div>
+             )}
           </div>
         </Link>
         

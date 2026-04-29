@@ -3,17 +3,20 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowLeft, ChevronDown, ChevronUp, ShoppingBag } from "lucide-react";
+import { ArrowLeft, ChevronDown, ChevronUp, ShoppingBag, Check } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useCart } from "@/hooks/useCart";
 import { siteData } from "@/config/siteData";
 
 export default function ProductDetailPage({ params }: { params: { category: string, id: string } }) {
   const { category, id } = params;
-  
+
   const [activeSize, setActiveSize] = useState<string | null>(null);
   const [openAccordion, setOpenAccordion] = useState<string | null>("description");
+  const [addedToCart, setAddedToCart] = useState(false);
+  const { addToCart } = useCart();
 
   // Fetch product data directly from configuration
   const categoryData = siteData.products[category as keyof typeof siteData.products];
@@ -114,15 +117,40 @@ export default function ProductDetailPage({ params }: { params: { category: stri
             </motion.div>
 
             {/* Action Buttons */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
               className="flex flex-col gap-4 mb-16"
             >
-              <button className="w-full h-16 bg-[#1F1F1F] text-[#F3EFEA] flex items-center justify-center gap-3 uppercase font-poppins text-xs tracking-[4px] font-semibold hover:bg-black transition-colors rounded-none relative overflow-hidden group">
-                <span className="relative z-10">Add to Tote</span>
-                <ShoppingBag size={14} className="relative z-10" />
+              <button
+                disabled={!activeSize || addedToCart}
+                onClick={() => {
+                  if (activeSize && product) {
+                    addToCart(product, activeSize, category as "luxury" | "casual" | "teens");
+                    setAddedToCart(true);
+                    setTimeout(() => setAddedToCart(false), 2000);
+                  }
+                }}
+                className={`w-full h-16 flex items-center justify-center gap-3 uppercase font-poppins text-xs tracking-[4px] font-semibold rounded-none relative overflow-hidden group transition-colors ${
+                  addedToCart
+                    ? "bg-green-600 text-white"
+                    : activeSize
+                    ? "bg-[#1F1F1F] text-[#F3EFEA] hover:bg-black"
+                    : "bg-[#1F1F1F]/40 text-[#F3EFEA]/40 cursor-not-allowed"
+                }`}
+              >
+                {addedToCart ? (
+                  <>
+                    <span className="relative z-10">Added to Cart</span>
+                    <Check size={14} className="relative z-10" />
+                  </>
+                ) : (
+                  <>
+                    <span className="relative z-10">{activeSize ? "Add to Tote" : "Select a Size"}</span>
+                    <ShoppingBag size={14} className="relative z-10" />
+                  </>
+                )}
                 <div className="absolute top-0 right-0 w-full h-full bg-white/10 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-500 z-0"></div>
               </button>
             </motion.div>

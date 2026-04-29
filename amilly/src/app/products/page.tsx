@@ -5,8 +5,9 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
-import { SlidersHorizontal, ChevronDown, X } from "lucide-react";
+import { SlidersHorizontal, ChevronDown, X, ShoppingBag } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useCart } from "@/hooks/useCart";
 
 import { siteData } from "@/config/siteData";
 
@@ -20,53 +21,125 @@ const sortOptions = siteData.products.shared.sortOptions;
 
 function ProductCard({ product, idx }: { product: typeof products[0]; idx: number }) {
   const [hovered, setHovered] = useState(false);
+  const [showSizeModal, setShowSizeModal] = useState(false);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [addedToCart, setAddedToCart] = useState(false);
   const router = useRouter();
+  const { addToCart } = useCart();
+
+  const handleQuickAdd = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowSizeModal(true);
+  };
+
+  const handleAddToCart = () => {
+    if (!selectedSize) return;
+    addToCart(product, selectedSize, "luxury");
+    setAddedToCart(true);
+    setTimeout(() => {
+      setShowSizeModal(false);
+      setSelectedSize(null);
+      setAddedToCart(false);
+    }, 1500);
+  };
 
   return (
-    <motion.div
-      onClick={() => router.push(`/product/luxury/${product.id}`)}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 20 }}
-      transition={{ duration: 0.5, delay: (idx % 8) * 0.07 }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="group cursor-pointer flex flex-col"
-    >
-      {/* Image */}
-      <div className="relative w-full aspect-[3/4] overflow-hidden rounded-xl bg-[#F7F4F1]">
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          unoptimized
-          className={`object-cover ${product.pos} transition-transform duration-700 ${hovered ? "scale-108" : "scale-100"}`}
-          style={{ transform: hovered ? "scale(1.06)" : "scale(1)" }}
-        />
-        {/* Hover overlay */}
-        <motion.div
-          initial={false}
-          animate={{ opacity: hovered ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="absolute inset-0 bg-black/10 flex items-end justify-center pb-5"
-        >
-          <motion.button
-            initial={{ y: 12, opacity: 0 }}
-            animate={{ y: hovered ? 0 : 12, opacity: hovered ? 1 : 0 }}
+    <>
+      <motion.div
+        onClick={() => router.push(`/product/luxury/${product.id}`)}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 20 }}
+        transition={{ duration: 0.5, delay: (idx % 8) * 0.07 }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className="group cursor-pointer flex flex-col"
+      >
+        {/* Image */}
+        <div className="relative w-full aspect-[3/4] overflow-hidden rounded-xl bg-[#F7F4F1]">
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            unoptimized
+            className={`object-cover ${product.pos} transition-transform duration-700 ${hovered ? "scale-108" : "scale-100"}`}
+            style={{ transform: hovered ? "scale(1.06)" : "scale(1)" }}
+          />
+          {/* Hover overlay */}
+          <motion.div
+            initial={false}
+            animate={{ opacity: hovered ? 1 : 0 }}
             transition={{ duration: 0.3 }}
-            className="bg-white text-[#1F1F1F] text-xs font-poppins tracking-[3px] uppercase px-6 py-2.5 rounded-full hover:bg-[#1F1F1F] hover:text-white transition-colors"
+            className="absolute inset-0 bg-black/10 flex items-end justify-center pb-5"
           >
-            Quick View
-          </motion.button>
-        </motion.div>
-      </div>
+            <motion.button
+              initial={{ y: 12, opacity: 0 }}
+              animate={{ y: hovered ? 0 : 12, opacity: hovered ? 1 : 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={handleQuickAdd}
+              className="bg-white text-[#1F1F1F] text-xs font-poppins tracking-[3px] uppercase px-6 py-2.5 rounded-full hover:bg-[#1F1F1F] hover:text-white transition-colors flex items-center gap-2"
+            >
+              <ShoppingBag size={12} />
+              Add to Cart
+            </motion.button>
+          </motion.div>
+        </div>
 
-      {/* Info */}
-      <div className="mt-4 px-1 flex flex-col gap-1">
-        <p className="font-imprima text-sm tracking-[1px] text-[#1F1F1F] leading-tight opacity-90">{product.name}</p>
-        <p className="font-poppins text-sm font-semibold text-[#1F1F1F]">${product.price}</p>
-      </div>
-    </motion.div>
+        {/* Info */}
+        <div className="mt-4 px-1 flex flex-col gap-1">
+          <p className="font-imprima text-sm tracking-[1px] text-[#1F1F1F] leading-tight opacity-90">{product.name}</p>
+          <p className="font-poppins text-sm font-semibold text-[#1F1F1F]">${product.price}</p>
+        </div>
+      </motion.div>
+
+      {/* Size Selection Modal */}
+      <AnimatePresence>
+        {showSizeModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center"
+            onClick={() => setShowSizeModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl p-8 max-w-sm w-full mx-4"
+            >
+              <h3 className="font-aboreto text-xl uppercase tracking-[2px] mb-2">Select Size</h3>
+              <p className="text-sm opacity-60 mb-6">{product.name}</p>
+
+              <div className="grid grid-cols-5 gap-3 mb-8">
+                {sizes.map((size) => (
+                  <button
+                    key={size}
+                    onClick={() => setSelectedSize(size)}
+                    className={`py-3 text-sm font-medium uppercase transition-all border ${
+                      selectedSize === size
+                        ? "bg-[#1F1F1F] text-white border-[#1F1F1F]"
+                        : "border-[#D6CEC6] text-[#1F1F1F] hover:border-[#1F1F1F]"
+                    }`}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+
+              <motion.button
+                onClick={handleAddToCart}
+                disabled={!selectedSize || addedToCart}
+                className="w-full bg-[#1F1F1F] text-white py-3 uppercase text-xs tracking-[3px] font-medium rounded-full disabled:opacity-50 transition-all"
+              >
+                {addedToCart ? "✓ Added to Cart" : "Add to Cart"}
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
